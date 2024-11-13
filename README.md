@@ -14,6 +14,10 @@ kubectl get mutatingwebhookconfigurations kyverno-resource-mutating-webhook-cfg 
 kubectl get validatingwebhookconfigurations
 kubectl get validatingwebhookconfigurations kyverno-resource-validating-webhook-cfg -o yaml 
 ```
+ClusterPolicy and Policy
+```
+kubectl get cpol,pol -A  
+```
 
 ### Examples
 
