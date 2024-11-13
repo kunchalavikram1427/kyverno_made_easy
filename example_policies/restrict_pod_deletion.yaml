@@ -1,0 +1,36 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: restrict-pod-deletion-by-label
+  annotations:
+    policies.kyverno.io/title: Restrict Pod Deletion by Label
+    policies.kyverno.io/category: Best Practices, Security
+    policies.kyverno.io/severity: high
+    policies.kyverno.io/minversion: 1.6.0
+    kyverno.io/kubernetes-version: "1.26"
+    policies.kyverno.io/subject: Pod
+    policies.kyverno.io/description: >-
+      This policy prevents the deletion of Pods with specific labels to ensure critical resources are
+      not accidentally or maliciously removed.
+spec:
+  validationFailureAction: Enforce
+  background: false  # Only applies to live requests, not background scans
+  rules:
+    - name: deny-pod-deletion-with-label
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+              selector:
+                matchLabels:
+                  app: critical-app
+      validate:
+        message: "Deletion of Pods with label 'app: critical-app' is restricted."
+        deny:
+          conditions:
+            - key: "{{ request.operation }}"
+              operator: Equals
+              value: "DELETE"
+
+# kubectl run nginx --image nginx --labels app=critical-app

@@ -1,0 +1,72 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingWebhookConfiguration
+metadata:
+  annotations:
+    admissions.enforcer/disabled: "true"
+  labels:
+    webhook.kyverno.io/managed-by: kyverno
+  name: kyverno-resource-mutating-webhook-cfg
+webhooks:
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUM3VENDQWRXZ0F3SUJBZ0lCQURBTkJna3Foa2lHOXcwQkFRc0ZBREFZTVJZd0ZBWURWUVFEREEwcUxtdDUKZG1WeWJtOHVjM1pqTUI0WERUSTBNVEV4TXpBNE5ERXpNRm9YRFRJMU1URXhNekE1TkRFek1Gb3dHREVXTUJRRwpBMVVFQXd3TktpNXJlWFpsY201dkxuTjJZekNDQVNJd0RRWUpLb1pJaHZjTkFRRUJCUUFEZ2dFUEFEQ0NBUW9DCmdnRUJBTHlDZVhzUVNJS0ZzU293K0VkRkMyNVZpTVBZNGViRkJWSEx6SjJNdkh3TzZiUmphejROclU4bDIrd1kKT0tpcEtBN2xFQVU4WmVvUzA2em1BV0E0S0t3eEVjWS9MTnBKTC9uMDd1Zzg0VkFoWG1rZVd6VEoyN2V1V20vNwpNQStjTnRScUgzcEhIclFxMlBNMld0c0huMFdKRmo1eEJQQVVPTi9RNGR6UEZoZWkwVm1tZXNZQ2tFcFZDNzRUCjk0QzBzYStjOXZjUXljRFptRXJiQ3J5VjNxc2xKcUxZZ2VVN2hwbGZOR0hzNzVKNTlPUHFmWXpON3VLajUrZ1AKWEJIY0pBMXYwYTVEVS8wcHIrR2d2UXZWOStXQ2F2SnI0ZU1HTkJ4MDF4dmUvd0hoZVN3bUplQ3pDcDJKZkN6Swo0WlRUMGtJbDg5MnAvbHhMNVFhYXA5MG5UcTBDQXdFQUFhTkNNRUF3RGdZRFZSMFBBUUgvQkFRREFnS2tNQThHCkExVWRFd0VCL3dRRk1BTUJBZjh3SFFZRFZSME9CQllFRklnWEppbWZkSGVtWXYwMGkxUHQrRnh6aC9qT01BMEcKQ1NxR1NJYjNEUUVCQ3dVQUE0SUJBUUNHeU9BbnRtZVlxZzZLSmFaSXdMSWpEMFJRd0VOOHh6S3k3YjZzWEpXbQpXVFFhNkg4V2FuYTl3aUhTODhjOHFuNGFub2hUdXVMZkZMSk1vSTdjbDZpdjg5bnU5VDQ1Y0s3NzBKWGtEa2ZkClhiekM2eVpxOFV1cUM3YzFXQ1orSjRJMUxuT09hc3d0Vkd4d2xQU2tjUm9sOGVIK2dxRk9WMFg0NmdKUm1KU1MKTDRPQnVOd2dtRVpUVkxicTdJZ1dkeVA2VForRUtGNC9oS0ZyclFqT0ljQ0FDb3dNcnVJb3Qvb2hyd1Q4OERoZgptUythYWtQbVF1ZFo1T1dDTWRlVnUwdnZRenQra1pBbWd0Y3lJK1hKRVBTWUtlSC9CR0g4di9XU3JKTWVKTzM0CmJVR2lZam80d3JQdXBVUnNKcUJMRHA2QndEYTY5ZFVQYmxpYnJZN2o0SU9rCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+    service:
+      name: kyverno-svc
+      namespace: kyverno
+      path: /mutate/fail
+      port: 443
+  failurePolicy: Fail
+  matchPolicy: Equivalent
+  name: mutate.kyverno.svc-fail
+  namespaceSelector:
+    matchExpressions:
+    - key: kubernetes.io/metadata.name
+      operator: NotIn
+      values:
+      - kube-system
+    - key: kubernetes.io/metadata.name
+      operator: NotIn
+      values:
+      - kyverno
+  objectSelector: {}
+  reinvocationPolicy: IfNeeded
+  rules:
+  - apiGroups:
+    - ""
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - pods
+    - pods/ephemeralcontainers
+    - replicationcontrollers
+    scope: Namespaced
+  - apiGroups:
+    - apps
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - daemonsets
+    - deployments
+    - replicasets
+    - statefulsets
+    scope: Namespaced
+  - apiGroups:
+    - batch
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - cronjobs
+    - jobs
+    scope: Namespaced
+  sideEffects: NoneOnDryRun
+  timeoutSeconds: 10
