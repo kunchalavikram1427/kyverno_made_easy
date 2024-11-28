@@ -35,3 +35,6 @@ spec:
           - image: "*.ecr.*/* | *.artifactory.*/*"
           containers:
           - image: "*.ecr.*/* | *.artifactory.*/*"
+
+# kubectl run nginx --image nginx
+# kubectl run nginx --image test.ecr.com/nginx 

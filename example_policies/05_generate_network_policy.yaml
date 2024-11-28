@@ -28,7 +28,7 @@ spec:
       kind: NetworkPolicy
       name: default-deny
       namespace: "{{request.object.metadata.name}}"
-      synchronize: true
+      synchronize: true # auto recreates if deleted
       data:
         spec:
           # select all pods in the namespace
@@ -38,4 +38,6 @@ spec:
           - Ingress
           - Egress
 
+# kubectl get netpol -A
 # kubectl create ns test 
+# kubectl delete netpol default-deny -n test

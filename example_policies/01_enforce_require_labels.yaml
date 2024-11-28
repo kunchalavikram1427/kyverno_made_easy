@@ -14,8 +14,8 @@ metadata:
       all tools can understand. The recommended labels describe applications in a way that can be
       queried. This policy validates that the label `app.kubernetes.io/name` is specified with some value.      
 spec:
-  validationFailureAction: Audit
-  background: true
+  validationFailureAction: Enforce #Enforce/Audit
+  background: true  #false/true
   rules:
   - name: check-for-labels
     match:
@@ -30,6 +30,6 @@ spec:
           labels:
             app.kubernetes.io/name: "?*"
 
-# kubectl run nginx --image nginx --labels app.kubernetes.io/name=backstage
+# kubectl run nginx --image nginx --labels app.kubernetes.io/name=envoy
 # kubectl get policyreport -o wide
 # kubectl delete clusterpolicy require-labels

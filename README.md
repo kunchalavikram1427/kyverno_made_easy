@@ -7,10 +7,11 @@ kubectx docker-desktop
 ```
 ```
 kubectl create -f https://github.com/kyverno/kyverno/releases/download/v1.13.0/install.yaml
+kubectl get po -n kyverno
 ```
 ```
 kubectl get mutatingwebhookconfigurations
-kubectl get mutatingwebhookconfigurations kyverno-resource-mutating-webhook-cfg -o yaml > mutatingwebhookconfiguration.yaml
+kubectl get mutatingwebhookconfigurations kyverno-resource-mutating-webhook-cfg -o yaml
 kubectl get validatingwebhookconfigurations
 kubectl get validatingwebhookconfigurations kyverno-resource-validating-webhook-cfg -o yaml 
 ```

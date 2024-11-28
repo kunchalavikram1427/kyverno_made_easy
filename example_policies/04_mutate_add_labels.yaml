@@ -27,3 +27,6 @@ spec:
         metadata:
           labels:
             team: devops
+
+# kubectl run nginx --image nginx
+# kubectl get po --show-labels
