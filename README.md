@@ -19,9 +19,9 @@ ClusterPolicy and Policy
 kubectl get cpol,pol -A  
 ```
 
-### Examples
+## Examples
 
-#### Enforce labels
+### Enforce labels
 ```
 kubectl apply -f examples/enforce_require_labels.yaml 
 kubectl run nginx --image nginx --labels team=backend
@@ -38,7 +38,7 @@ kubectl delete po nginx
 kubectl delete clusterpolicy require-labels
 ```
 
-#### Mutate labels
+### Mutate labels
 ```
 kubectl apply -f examples/mutate_add_labels.yaml
 kubectl run nginx --image nginx
@@ -53,3 +53,23 @@ nginx   1/1     Running   0          18s   run=nginx,team=devops
 kubectl delete po nginx
 kubectl delete clusterpolicy add-labels
 ```              
+
+## Known errors
+
+Admission webhook "kyverno-cleanup-controller.kyverno.svc" denied the request: cleanup controller has no permission to delete kind Pod.
+```
+kubectl edit clusterrole kyverno:cleanup-controller:core
+```
+and add the below permissions
+
+```yml
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - delete
+  - list
+  - get
+```
+
