@@ -41,3 +41,5 @@ spec:
 # kubectl get netpol -A
 # kubectl create ns test 
 # kubectl delete netpol default-deny -n test
+# kubectl run nginx --image=nginx:alpine -n test 
+# kubectl exec -it nginx -n test -- ping -c4 8.8.8.8
