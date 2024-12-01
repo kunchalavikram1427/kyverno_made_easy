@@ -139,3 +139,10 @@ and add the below permissions
   - get
 ```
 
+## Links
+- https://kyverno.io/#about-kyverno
+- https://kyverno.io/docs/
+- https://kyverno.io/policies/
+- https://playground.kyverno.io/
+- https://kyverno.io/blog/
+- https://github.com/kyverno/kyverno/
