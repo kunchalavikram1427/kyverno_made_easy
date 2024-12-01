@@ -67,7 +67,7 @@ spec:
 Kyverno is often compared to tools like Open Policy Agent (OPA) with Gatekeeper, but its Kubernetes-native approach and simplicity make it a preferred choice for many Kubernetes users.
 
 ## Install
-Install using Helm or via YAMLs. https://kyverno.io/docs/installation/
+Install using [Helm or via YAMLs](https://kyverno.io/docs/installation/)
 ```
 kubectl create -f https://github.com/kyverno/kyverno/releases/download/v1.13.0/install.yaml
 kubectl get po -n kyverno
