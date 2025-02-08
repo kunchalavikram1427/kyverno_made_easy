@@ -146,3 +146,50 @@ and add the below permissions
 - https://playground.kyverno.io/
 - https://kyverno.io/blog/
 - https://github.com/kyverno/kyverno/
+- https://training.linuxfoundation.org/certification/kyverno-certified-associate-kca/
+
+
+## Exam topics
+
+### Fundamentals of Kyverno  
+- Kyverno Policies & Rules: https://kyverno.io/docs/kyverno-policies/
+- YAML Manifests  
+- Admission Controllers  
+- OCI Images  
+
+### Installation, Configuration, and Upgrades  
+- Helm-based Installation and Configuration  
+- Kyverno Custom Resource Definitions (CRDs)  
+- Controller Configuration with Flags  
+- Configuring Kyverno RBAC, roles, and permissions  
+- High Availability Installations  
+- Upgrading Kyverno  
+
+### Kyverno CLI
+- Installing Kyverno CLI: https://kyverno.io/docs/kyverno-cli/
+- apply: https://kyverno.io/docs/kyverno-cli/usage/apply/
+- test: https://kyverno.io/docs/kyverno-cli/usage/test/  
+- jp  
+
+### Applying Policies  
+- Applying Policy in Cluster  
+- Resource Selection  
+- Common Policy Settings for Kyverno Rules  
+
+### Writing Policies  
+- Validation Rules: https://kyverno.io/docs/writing-policies/validate/  
+- Preconditions  
+- Background Scans  
+- Mutation Rules  
+- Generation Rules  
+- VerifyImage Rules  
+- Variables & API Calls in Policies  
+- JSON Patches  
+- Autogen Rules  
+- Cleanup Policies: https://kyverno.io/docs/writing-policies/cleanup/#cleanup-policy 
+- Common Expression Language (CEL)  
+
+### Policy Management  
+- Policy Reports  
+- PolicyExceptions  
+- Kyverno Metrics  
