@@ -74,6 +74,7 @@ helm repo update
 ```
 ```
 helm install kyverno kyverno/kyverno -n kyverno --create-namespace
+
 NAME: kyverno
 LAST DEPLOYED: Fri Mar 14 11:33:26 2025
 NAMESPACE: kyverno
@@ -179,6 +180,8 @@ and add the below permissions
 - https://kyverno.io/blog/
 - https://github.com/kyverno/kyverno/
 - https://training.linuxfoundation.org/certification/kyverno-certified-associate-kca/
+- https://grafana.com/docs/grafana/latest/setup-grafana/installation/kubernetes/
+- https://grafana.com/docs/grafana/latest/setup-grafana/installation/helm/
 
 
 ## Exam topics
