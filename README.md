@@ -67,7 +67,9 @@ spec:
 Kyverno is often compared to tools like Open Policy Agent (OPA) with Gatekeeper, but its Kubernetes-native approach and simplicity make it a preferred choice for many Kubernetes users.
 
 ## Install
-Install using [Helm or via YAMLs](https://kyverno.io/docs/installation/)
+
+### Install with K8s YAMLs or Helm
+https://kyverno.io/docs/installation/
 ```
 helm repo add kyverno https://kyverno.github.io/kyverno/
 helm repo update
@@ -116,6 +118,32 @@ kubectl get validatingwebhookconfigurations kyverno-resource-validating-webhook-
 ClusterPolicy and Policy
 ```
 kubectl get cpol,pol -A  
+```
+### Setup Grafana dashboard
+https://kyverno.io/docs/monitoring/bonus-grafana-dashboard/
+```
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+helm install monitoring prometheus-community/kube-prometheus-stack -n monitoring --create-namespace
+kubectl -n monitoring get po -l "release"
+
+# For Grafana
+kubectl patch svc monitoring-grafana -n monitoring --type='merge' -p '{"spec": {"type": "NodePort"}}'
+kubectl get svc monitoring-grafana -n monitoring
+
+# For Prometheus
+kubectl patch svc monitoring-kube-prometheus-prometheus -n monitoring --type='merge' -p '{"spec": {"type": "NodePort"}}'
+kubectl get svc monitoring-kube-prometheus-prometheus -n monitoring
+
+# Get Grafana secret
+kubectl get secret monitoring-grafana -n monitoring -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+
+kubectl label ns kyverno app.kubernetes.io/instance=kyverno                                                               
+kubectl label ns kyverno app.kubernetes.io/name=kyverno
+
+kubectl apply -f setup/service-monitor.yaml
+
+kubectl rollout restart deploy,sts -n monitoring
 ```
 
 ## Examples

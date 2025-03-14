@@ -1,0 +1,24 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app.kubernetes.io/instance: monitoring
+    chart: kube-prometheus-stack-51.2.0
+    heritage: Helm
+    release: monitoring
+  name: service-monitor-kyverno-service
+  namespace: monitoring
+spec:
+  endpoints:
+  - interval: 60s
+    path: /metrics
+    scheme: http
+    targetPort: 8000
+    tlsConfig:
+      insecureSkipVerify: true
+  namespaceSelector:
+    matchNames:
+    - kyverno
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: kyverno
