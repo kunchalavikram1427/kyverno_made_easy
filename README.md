@@ -69,6 +69,38 @@ Kyverno is often compared to tools like Open Policy Agent (OPA) with Gatekeeper,
 ## Install
 Install using [Helm or via YAMLs](https://kyverno.io/docs/installation/)
 ```
+helm repo add kyverno https://kyverno.github.io/kyverno/
+helm repo update
+```
+```
+helm install kyverno kyverno/kyverno -n kyverno --create-namespace
+NAME: kyverno
+LAST DEPLOYED: Fri Mar 14 11:33:26 2025
+NAMESPACE: kyverno
+STATUS: deployed
+REVISION: 1
+NOTES:
+Chart version: 3.3.7
+Kyverno version: v1.13.4
+
+Thank you for installing kyverno! Your release is named kyverno.
+
+The following components have been installed in your cluster:
+- CRDs
+- Admission controller
+- Reports controller
+- Cleanup controller
+- Background controller
+
+
+⚠️  WARNING: Setting the admission controller replica count below 2 means Kyverno is not running in high availability modee.
+
+
+⚠️  WARNING: PolicyExceptions are disabled by default. To enable them, set '--enablePolicyException' to true.
+
+💡 Note: There is a trade-off when deciding which approach to take regarding Namespace exclusions. Please see the documentation at https://kyverno.io/docs/installation/#security-vs-operability to understand the risks.
+```
+```
 kubectl create -f https://github.com/kyverno/kyverno/releases/download/v1.13.0/install.yaml
 kubectl get po -n kyverno
 kubectl explain policy.spec
